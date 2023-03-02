@@ -1,9 +1,12 @@
 import React from 'react'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 import { Layout } from '../containers/Layout'
 import { Login } from '../containers/Login'
 import { RecoveryPassword } from '../containers/RecoveryPassword'
+
+import { Home } from '../pages/Home'
+import { NotFound } from '../pages/NotFound'
 
 import '../styles/global.css'
 
@@ -12,18 +15,17 @@ const App = () => {
     <>
       <BrowserRouter>
       
-        <Switch>
-          <Layout>
+        <Layout>
+          <Routes>
+            <Route path='/' element={<Home />} />
 
-            <Route exact path='/' component={Home}/>
+            <Route path='/login' element={<Login />} />
 
-            <Route exact path='/login' component={Login}/>
+            <Route path='/recovery-password' element={<RecoveryPassword />}/>
 
-            <Route exact path='/recovery-password' component={RecoveryPassword}/>
-
-            <Route component={NotFound}/>
-          </Layout>
-        </Switch>
+            <Route path='*' element={<NotFound />}/>
+          </Routes>
+        </Layout>
       </BrowserRouter>
       
     </>
