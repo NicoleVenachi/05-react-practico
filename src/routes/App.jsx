@@ -16,9 +16,18 @@ import CreateAccount from '../pages/CreateAccount'
 import Checkout from '../pages/Checkout'
 import Orders from '../pages/Orders'
 
+import { AppContext } from '../context/AppContext'
+
+//importo hooks
+import { useInitialState } from '../hooks/useInitialState'
+
 const App = () => {
+
+  //creo/instancio el estado
+  const initialState = useInitialState();
+
   return (
-    <>
+    <AppContext.Provider value={initialState}>
       <BrowserRouter>
 
         <Layout>
@@ -41,7 +50,7 @@ const App = () => {
         </Layout>
       </BrowserRouter>
 
-    </>
+    </AppContext.Provider>
   )
 }
 
