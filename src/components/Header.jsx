@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 //components
 import Menu from "@components/Menu"
+import MyOrder from "@containers/MyOrder"
 
 import '@styles/Header.scss'
 
@@ -10,13 +11,23 @@ import menu from '@icons/icon_menu.svg';
 import logo from "@logos/logo_yard_sale.svg";
 import shoppingCart from "@icons/icon_shopping_cart.svg";
 
-function Header() {
+//importo el context
+import { AppContext } from '../context/AppContext';
 
+
+function Header() {
+  //traigo estado del carrito, para contar
+  const { state } = useContext(AppContext);
+
+  //toggle del menu de usuario
   const [toggle, setToggle] = useState(false);
 
   const handleToggle = () => {
     setToggle(prevState => !prevState)
   }
+
+  //toggle checkout
+  const [toggleOrders, setToggleOrders] = useState(false);
 
   return (
     <nav>
@@ -52,9 +63,18 @@ function Header() {
           <li className="navbar-email"
             onClick={handleToggle}
           >platzi@example.com</li>
-          <li className="navbar-shopping-cart">
+          <li
+            className="navbar-shopping-cart"
+            onClick={(() => setToggleOrders(prevState => !prevState))}
+          >
             <img src={shoppingCart} alt="shopping cart" />
-            <div>2</div>
+            {
+              //si hay algo en carrito muestro numero, sino nada
+              //el div en su estilo tiene el circulito
+              state.cart.length > 0 ? <div> {state.cart.length} </div> : null
+            }
+
+
           </li>
         </ul>
       </div>
@@ -62,6 +82,11 @@ function Header() {
       {
         //si toggle es true, muestra menu
         !!toggle && <Menu />
+      }
+
+      {
+        //muestro las ordenes
+        !!toggleOrders && <MyOrder />
       }
 
     </nav>

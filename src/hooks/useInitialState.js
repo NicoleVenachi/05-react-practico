@@ -17,7 +17,21 @@ function useInitialState() {
     })
   ]
 
-  return {state, addToCart}
+  //eliminar elementos del carrito
+  const removeFromCart = (payload) => {
+    setState({
+      ... state,
+      //cart será el mismo cart, pero quitando elementos con el id
+      
+      cart: state.cart.filter(items => items.id != payload.id)
+    })
+  }
+
+  return {
+    state,
+    addToCart,
+    removeFromCart
+  }
 }
 
 export {useInitialState}
